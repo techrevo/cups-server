@@ -1,0 +1,19 @@
+services:
+  cups:
+    container_name: cups-server
+    build: .
+    restart: unless-stopped
+    hostname: cups-server
+    network_mode: host
+    privileged: true
+    environment:
+      - ADMIN_PASSWORD=your_secure_password
+      - TZ=Europe/Rome
+    volumes:
+      - ./cups_config:/etc/cups
+      - ./cups_cache:/var/cache/cups
+      - /var/run/dbus:/var/run/dbus
+    deploy:
+      resources:
+        limits:
+          memory: 512M
